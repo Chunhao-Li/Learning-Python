@@ -475,7 +475,106 @@ def sed(p_str,replace_str,source,dest):
 #        print("bingo")
 #        bingo == True
         
-acc = 0
-for i in range(101):
-    acc += i
-print(acc)
+#acc = 0
+#for i in range(101):
+#    acc += i
+#print(acc)
+        
+        
+def histogram(seq):
+    count = dict()
+    for elem in seq:
+        if elem not in count:
+            count[elem] = 1
+        else:
+            count[elem] += 1
+    return count
+
+
+def invert_dictionary(d):
+    inverse_d = {}
+    for k in d:
+        if d[k] not in inverse_d:
+            inverse_d[d[k]] = {k}
+        else:
+           inverse_d[d[k]].add(k)
+    return inverse_d
+
+def dict_len(wordlist):
+    d = {}
+    for word in wordlist:
+        if len(word) not in d:
+            d[len(word)] = [word]
+        else:
+            d[len(word)].append(word)
+    return d
+
+def remove_newline_ls(path):
+    f = open(path)
+    ls = [line.strip() for line in f]
+    return ls
+
+def three_consecutive(wordlist):
+    '''Find words have three consecutive double letters'''
+    len_dict = dict_len(wordlist)
+    
+    new_ls = []
+    for ki in range(6, max(len_dict.keys())):
+        for word in len_dict[ki]:
+            i = 0
+            while i+5 < len(word):
+                if word[i] == word[i+1]\
+                and word[i+2] == word[i+3]\
+                and word[i+4] == word[i+5]\
+                and word[i] != word[i+2] != word[i+4]:
+                    new_ls.append(word)
+                i += 1
+    return new_ls       
+    
+def is_triple_double(word):
+    """Tests if a word contains three consecutive double letters.
+    
+    word: string
+
+    returns: bool
+    """
+    i = 0
+    count = 0
+    while i < len(word)-1:
+        if word[i] == word[i+1]:
+            count = count + 1
+            if count == 3:
+                return True
+            i = i + 2
+        else:
+            count = 0
+            i = i + 1
+    return False
+
+
+def find_triple_double(path):
+    """Reads a word list and prints words with triple double letters."""
+    fin = open(path)
+    for line in fin:
+        word = line.strip()
+        if is_triple_double(word):
+            print(word)
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
