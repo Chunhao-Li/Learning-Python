@@ -560,10 +560,11 @@ def find_triple_double(path):
         if is_triple_double(word):
             print(word)
     
+def printall(*args):
+    print(args)
     
-    
-    
-    
+def sumall(*args):
+    return sum(args)
     
     
     
