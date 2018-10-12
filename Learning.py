@@ -531,7 +531,7 @@ def three_consecutive(wordlist):
                 i += 1
     return new_ls       
     
-def is_triple_double(word):
+def is_triple_double(word): # From textbook
     """Tests if a word contains three consecutive double letters.
     
     word: string
@@ -552,7 +552,7 @@ def is_triple_double(word):
     return False
 
 
-def find_triple_double(path):
+def find_triple_double(path): # From textbook
     """Reads a word list and prints words with triple double letters."""
     fin = open(path)
     for line in fin:
@@ -567,15 +567,47 @@ def sumall(*args):
     return sum(args)
     
     
+def make_word_list():
+    from urllib.request import urlopen
+#  fileobj = urlopen("https://cs.anu.edu.au/courses/comp1730/labs/lab7/")  
+    fileobj = urlopen("http://www.gutenberg.org/ebooks/42671.txt.utf-8")
+    #fileobj = urlopen("http://www.gutenberg.org/cache/epub/42671/pg42671.txt.utf-8")
+    ls =[]
+#    for line in fileobj:
+#        line = line.split()
+#        ls.extend(line)
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    import string
+    for byteseq in fileobj:
+        line = byteseq.decode()
+        if line.strip() != '':
+            line = line.rstrip('\n\r')
+            exclude = set(string.punctuation)
+            line = ''.join(ch for ch in line if ch not in exclude)
+            word_list = line.split()
+            ls.extend(word_list)
+        # process line of text
+    fileobj.close()
+    return ls
+
+
+def permutation_dict(d):
+    ls = []  # list of closed sets
+   
+    for k in d:
+        check = k
+        set1 = set()
+        while d[k] in d:
+            if d[k] == check:
+                set1.add(k)
+                ls.append(set1)
+                break
+            else:
+                set1.add(k)
+                k = d[k]
+    no_duplicate_ls =[]
+    for element in ls:
+        if element not in no_duplicate_ls:
+            no_duplicate_ls.append(element)
+             
+    return no_duplicate_ls
