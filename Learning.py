@@ -1005,4 +1005,4 @@ if __name__ == '__main__':
     
     
 def get_pos(n):
-    return (n/2, n*2)
+    return n/2, n*2
