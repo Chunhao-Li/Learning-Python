@@ -1,3 +1,5 @@
+ # -*- coding: gbk -*-
+
 def print_params(*params):
 	print(params)
     
@@ -367,6 +369,11 @@ class Time:
     def __radd__(self, other):
         return self.__add__(other)
     
+    def __lt__(self, other):
+        t1 = self.hour,self.minute,self.second
+        t2 = other.hour,other.minute,other.second
+        return t1 < t2
+    
 def int_to_time(seconds):
     """Makes a new Time object.
 
@@ -491,7 +498,7 @@ def histogram(seq):
     return count
 
 
-def invert_dictionary(d):
+def invert_dictionary_sets(d):
     inverse_d = {}
     for k in d:
         if d[k] not in inverse_d:
@@ -499,6 +506,24 @@ def invert_dictionary(d):
         else:
            inverse_d[d[k]].add(k)
     return inverse_d
+
+
+    
+def invert_dict(d):
+    """Inverts a dictionary, returning a map from val to a list of keys.
+
+    If the mapping key->val appears in d, then in the new dictionary
+    val maps to a list that includes key.
+
+    d: dict
+
+    Returns: dict
+    """
+    inverse = {}
+    for key in d:
+        val = d[key]
+        inverse.setdefault(val, []).append(key)
+    return inverse
 
 def dict_len(wordlist):
     d = {}
@@ -611,3 +636,373 @@ def permutation_dict(d):
             no_duplicate_ls.append(element)
              
     return no_duplicate_ls
+
+def has_duplicates_dict(lst):
+    d = {}
+    for element in lst:
+      d.setdefault(element,[]).append(element)
+      if len(d[element]) > 1: 
+#           print(d)
+           return True
+    return False
+
+
+def has_duplicates_concise1(t):
+    """Checks whether any element appears more than once in a sequence.
+
+    Simple version using a for loop.
+
+    t: sequence
+    """
+    d = {}
+    for x in t:
+        if x in d:
+            return True
+        d[x] = True
+    return False
+
+
+def has_duplicates_concise2(t):
+    """Checks whether any element appears more than once in a sequence.
+
+    Faster version using a set.
+
+    t: sequence
+    """
+    return len(set(t)) < len(t)
+
+def game_penalty_kick():
+    
+#    score_player = 0
+#    score_computer = 0
+    score = [0,0]
+    direct_ls = ['left','centre','right']
+    while score[0] == score[1]:
+        for i in range(5):
+            print('==== Round %d - You kick! ====' %(i+1))
+            print("Choose one side to shoot:"), print('left, centre, right')
+            player = input("Choose one side to shoot:")
+            direct = random.choice(direct_ls)
+            print('Computer saved ' + direct)
+            if player != direct:
+                score[0] += 1
+    #            score_computer -= 1
+                print('Goal!')
+            else:
+                score[1] += 1
+    #            score_player -= 1
+                print('Served')
+                
+            i += 1
+    print('Score: %d(player) - %d(computer)' % (score[0], score[1]))
+    if score[0] > score[1]:
+        print('You Win!')
+    else:
+        print('You Lose.')
+#game_penalty_kick()
+        
+def calculate_average_score():
+    '''Calculate the average scores of a person'''
+    f = open('scores.txt')
+    lines = f.readlines()
+#    print(lines)
+    f.close()
+    
+    results = []
+    
+    for line in lines:
+#        print(line)
+        data = line.split()
+#        print(data)
+        
+        sum = 0
+        for score in data[1:]:
+            point = int(score)
+            if point < 60:
+                continue
+            sum += int(score)
+        result = '%s\t:%d\n' %(data[0], sum)
+#        print(result)
+        
+        results.append(result)
+#    print(results)
+    output = open('result.txt', 'w')
+    output.writelines(results)
+    output.close()
+    
+def structshape(ds):
+    """Returns a string that describes the shape of a data structure.
+
+    ds: any Python object
+
+    Returns: string
+    """
+    typename = type(ds).__name__
+
+    # handle sequences
+    sequence = (list, tuple, set, type(iter('')))
+    if isinstance(ds, sequence):
+        t = []
+        for i, x in enumerate(ds):
+            t.append(structshape(x))
+        rep = '%s of %s' % (typename, listrep(t))
+        return rep
+
+    # handle dictionaries
+    elif isinstance(ds, dict):
+        keys = set()
+        vals = set()
+        for k, v in ds.items():
+            keys.add(structshape(k))
+            vals.add(structshape(v))
+        rep = '%s of %d %s->%s' % (typename, len(ds), 
+                                   setrep(keys), setrep(vals))
+        return rep
+
+    # handle other types
+    else:
+        if hasattr(ds, '__class__'):
+            return ds.__class__.__name__
+        else:
+            return typename
+
+
+def listrep(t):
+    """Returns a string representation of a list of type strings.
+
+    t: list of strings
+
+    Returns: string
+    """
+    current = t[0]
+    count = 0
+    res = []
+    for x in t:
+        if x == current:
+            count += 1
+        else:
+            append(res, current, count)
+            current = x
+            count = 1
+    append(res, current, count)
+    return setrep(res)
+
+
+def setrep(s):
+    """Returns a string representation of a set of type strings.
+
+    s: set of strings
+
+    Returns: string
+    """
+    rep = ', '.join(s)
+    if len(s) == 1:
+        return rep
+    else:
+        return '(' + rep + ')'
+    return 
+
+
+def append(res, typestr, count):
+    """Adds a new element to a list of type strings.
+
+    Modifies res.
+
+    res: list of type strings
+    typestr: the new type string
+    count: how many of the new type there are
+
+    Returns: None
+    """
+    if count == 1:
+        rep = typestr
+    else:
+        rep = '%d %s' % (count, typestr)
+    res.append(rep)
+    
+def most_frequent(string):
+    '''Takes a string and prints the letters in decreasing order of frequency'''
+    d = {}
+    freq_ls = []
+    for char in string:
+#        if char not in d:
+#            d[char] = 1
+#        else:
+#            d[char] +=1
+        d[char] = d.get(char,0) + 1
+    for x,freq in d.items():
+        freq_ls.append((freq,x))
+    freq_ls.sort(reverse=True)
+    for freq, x in freq_ls:
+        print(x)
+    
+class Card:
+    """Represents a standard playing card."""
+    
+    def __init__(self, suit=0, rank=2):
+        self.suit = suit
+        self.rank = rank
+    
+    suit_names = ['Clubs', 'Diamonds', 'Hearts', 'Spades']
+    rank_names = [None, 'Ace', '2', '3', '4', '5', '6', '7', '8',
+                  '9', '10', 'Jack', 'Queen', 'King']
+    
+    def __str__(self):
+        return '%s of %s' % (Card.rank_names[self.rank],
+                             Card.suit_names[self.suit])
+    
+    def __lt__(self, other):
+#        # check the suits
+#        if self.suit < other.suit : return True
+#        if self.suit > other.suit : return False
+#        
+#        # suits are the same... check ranks
+#        return self.rank < other.rank    
+        
+        t1 = self.suit, self.rank
+        t2 = other.suit,other.rank
+        return t1 < t2
+import random 
+class Deck:
+    
+    def __init__(self):
+        self.cards = []
+        for suit in range(4):
+            for rank in range(1,14):
+                card = Card(suit, rank)
+                self.cards.append(card)
+            
+    def __str__(self):
+        res = []
+        for card in self.cards:
+            res.append(str(card))
+        return '\n'.join(res) 
+    
+    def pop_card(self):
+        return self.cards.pop()
+    
+    def add_card(self,card):
+        self.cards.append(card)
+    
+    def sort(self):
+        self.cards.sort()
+    
+    def shuffle(self):
+        random.shuffle(self.cards)
+        
+    def move_cards(self, hand, num):
+        for i in range(num):
+            hand.add_card(self.pop_card())
+    
+class Hand(Deck):
+    """Represents a hand of playing cards."""
+    def __init__(self, label=''):
+        self.cards = []
+        self.label = label
+        
+        
+        
+def find_defining_class(obj, meth_name):
+    for ty in type(obj).mro():
+        if meth_name in ty.__dict__:
+            return ty
+
+import urllib.request
+import json
+def find_weather():
+        from city import city
+        
+        cityname = input('Which city do you want to search for?\n')
+        citycode = city.get(cityname)
+        if citycode:
+           try:
+            url = ('http://www.weather.com.cn/data/cityinfo/%s.html' % citycode)
+            content = urllib.request.urlopen(url).read().decode()
+            data = json.loads(content)
+            result = data['weatherinfo']
+            str_temp = ('%s\n%s ~ %s') % (result['weather'],
+                                          result['temp1'],
+                                          result['temp2'])
+            print(str_temp)
+           except:
+              print('Searching failed')
+        
+        else:
+            print("Haven't find the city")
+
+
+def find_city_code():
+        url1 = 'http://m.weather.com.cn/data3/city.xml'
+        content1 = urllib.request.urlopen(url1).read().decode()
+        provinces = content1.split(',')
+        
+        result = 'city = {\n'
+        url = 'http://m.weather.com.cn/data3/city%s.xml'
+        for p in provinces:
+            p_code = p.split('|')[0]
+            if p_code == '23':
+                url2 = url%p_code
+                content2 = urllib.request.urlopen(url2).read().decode()
+                cities = content2.split(',')
+        
+        #districts = []
+                for c in cities:
+                #    if c.split('|')[1] == '龙岩':
+                    
+                    c_code = c.split('|')[0]
+            #        if c_code == 
+                    url3 = url%c_code
+                    content3 = urllib.request.urlopen(url3).read().decode()
+                    districts = content3.split(',')
+            
+                    for d in districts:
+                        d_pair = d.split('|')
+                        d_code = d_pair[0]
+                        name = d_pair[1]
+                        url4 = url %d_code
+                        content4 = urllib.request.urlopen(url4).read().decode()
+                        code = content4.split('|')[1]
+                        line = "  '%s':'%s',\n" % (name, code)
+                        result += line
+                        print(name + ':' + code)
+        result += '}'
+        f = open('city_code.py', 'w')
+        f.write(result)
+        f.close
+        
+        
+class MyClass:
+    name = 'Sam'
+
+    def sayHi(self):
+        print('Hello %s' % self.name)
+
+class Vehicle:
+    def __init__(self, speed):
+        self.speed = speed
+    
+    def drive(self, distance):
+        print('need %f hour(s)' % (distance / self.speed))
+
+class Bike(Vehicle):
+    pass
+
+class Car(Vehicle):
+    def __init__(self, speed, fuel):
+        Vehicle.__init__(self,speed)
+        self.fuel = fuel
+        
+    def drive(self, distance):
+        Vehicle.drive(self, distance)
+        print('need %f fuels' % (distance*self.fuel))
+    
+if __name__ == '__main__':
+#    b = Bike(15.0)
+#    c = Car(80.0, 0.012)
+#    b.drive(100.0)
+#    c.drive(100.0)
+        pass
+    
+    
+def get_pos(n):
+    return (n/2, n*2)
