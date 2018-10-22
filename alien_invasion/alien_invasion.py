@@ -1,42 +1,39 @@
-import sys
-
 import pygame
 
 from settings import Settings 
 from ship import Ship
+import game_functions as gf
+from model import Doraemon
 
 def run_game():
-	#Initiates the game and creats a screen object
-	pygame.init()
-	ai_settings = Settings()
+    #Initiates the game and creats a screen object
+    pygame.init()
+    ai_settings = Settings()
 
-	screen = pygame.display.set_mode(
-		(ai_settings.screen_width, ai_settings.screen_height))
-	pygame.display.set_caption("Alien Invasion")
-
-
-	# Create a ship
-	ship = Ship(screen)
-
-	# # Set the background colour
-	# bg_color = (200,200,200)
+    screen = pygame.display.set_mode(
+        (ai_settings.screen_width, ai_settings.screen_height))
+    pygame.display.set_caption("Alien Invasion")
 
 
-	#Start the main loop of the game
-	while True:
+    # Create a ship
+    ship = Ship(screen)
 
-		#Monitor the keyboard and mouse
-		for event in pygame.event.get():
-			if event.type == pygame.QUIT:
-				sys.exit()
+    # Create a model
+    # doraemon = Doraemon(screen)
 
-
-		screen.fill(ai_settings.bg_color)
-		ship.blitme()
+    # # Set the background colour
+    # bg_color = (200,200,200)
 
 
-		#To display the latest screen
-		pygame.display.flip()
+    #Start the main loop of the game
+    while True:
+
+        #Monitor the keyboard and mouse
+        gf.check_events()
+        gf.update_screen(ai_settings, screen, ship)
+
+
+
 
 
 run_game()
