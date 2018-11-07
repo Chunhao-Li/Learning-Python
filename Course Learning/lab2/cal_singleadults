@@ -1,0 +1,22 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Fri Aug  3 10:34:01 2018
+
+@author: u6527752
+"""
+# 2016 census data
+# 196,037 people (adults and chldren)
+# 50,352 families
+# 22,850 couple with one or more children
+# 7,243 single with one or more children
+
+canberra_population = 196037
+canberra_families   = 50352
+# ave_children_family = canberra_children / canberra_families
+ave_children_family = 1.8
+nochildren_families = canberra_families - 22850 - 7243
+canberra_children = ave_children_family * canberra_families
+canberra_adults = canberra_population - canberra_children
+single_adults = canberra_population - canberra_children - (22850+nochildren_families)*2 - 7243
+print("number of people per household:", single_adults)

@@ -165,7 +165,7 @@ def onestepplace(board, mycolor):
     else:
         depth = 4
     value, bestmove = alphabetav2(board, depth, -10000, 10000, mycolor, mycolor, depth)
-    return bestmove
+    return bestmove 
 
 def alphabetav2(board, depth, alpha, beta, actcolor, mycolor, maxdepth):
     moves, ValidBoardList = getmoves(board, actcolor)

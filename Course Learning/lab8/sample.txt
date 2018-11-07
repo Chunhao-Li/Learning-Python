@@ -1,0 +1,23 @@
+Home » COMP1730/6730: Labs » Semester 2, 2018: Lab 8
+Semester 2, 2018: Lab 8
+Lab 8
+Note: If you do not have time to finish all exercises (in particular, the programming problems) during the lab time, you should continue working on them later. You can do this at home (if you have a computer with python set up), in the CSIT lab rooms outside teaching hours, or on one of the computers available in the university libraries or other teaching spaces.
+
+If you have any questions about any of the material in the previous labs, now is a godo time to ask your tutor for help during the lab.
+
+Objectives
+The purpose of this week’s lab is to:
+
+Examine the directory structure and file system on the lab computers, and understand the concept of absolute and relative paths.
+Try reading (and writing) text files in python.
+The file system
+Files and directories are an abstraction provided by the operating system (OS) to make it easier for programmers and users to interact with the underlying storage device (hard drive, USB key, network file server, etc).
+
+In a unix system (like the one in the CSIT labs), the file system is organised into a single directory tree. That means directories can contain several (sub-)directories (or none), but each directory has only one directory directly above it, the one that it is contained in. (This is often called the “parent directory”.) The top-most directory in the tree, which is called /, has no parent directory. Every file is located in some directory.
+
+Exercise 0: Navigating the directory structure
+For this exercise, you will need some directories and files to work with. As we recommended in Lab 1, create a directory called comp1730 in your home directory (if you haven’t already), and within that directory create one called lab8. You can do this using whichever tool you’re familiar with (the commandline terminal or the graphical folders tool).
+
+Next, create a file with a few lines of text (including some empty lines). You can use the editor in the IDE, or any other text editor, to write the file. (If you don’t know what to write, just copy some text from this page.) Save your file with the name sample.txt in the lab8 directory.
+
+When you are done, you should have something like the following:
