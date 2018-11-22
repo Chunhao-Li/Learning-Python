@@ -4,6 +4,8 @@
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/alien_invasion" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/alien_invasion/images" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/alien_invasion/Practice/Rocket/image" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/alien_invasion/Practice/Rocket" isTestSource="false" />
     </content>
     <orderEntry type="jdk" jdkName="Python 3.6 (Learning-Python)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />

@@ -16,7 +16,7 @@ def run_game():
 
 
     # Create a ship
-    ship = Ship(screen)
+    ship = Ship(ai_settings, screen)
 
     # Create a model
     # doraemon = Doraemon(screen)

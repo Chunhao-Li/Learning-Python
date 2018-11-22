@@ -2804,3 +2804,17 @@ def remove_all(el, alist):
     while el in alist:
         i = alist.index(el)
         alist.pop(i)
+
+def monkey_buy_bananas():
+    day = 2
+    price = 2 **(int(day/21))
+    o_quantity = 10 // price
+    n_quantity = day*10 // price
+    while n_quantity > o_quantity:
+        o_quantity = n_quantity
+        day += 1
+        price = 2 ** (int(day / 21))
+        n_quantity = day*10 // price
+    return day
+
+
