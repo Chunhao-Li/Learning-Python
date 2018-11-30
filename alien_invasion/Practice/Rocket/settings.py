@@ -5,3 +5,5 @@ class Settings():
     self.screen_height = 800
     self.bg_color = (255, 255, 255)
 
+
+

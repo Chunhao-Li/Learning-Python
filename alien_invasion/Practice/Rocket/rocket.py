@@ -8,7 +8,7 @@ class Rocket():
     # self.ai_settings = ai_settings
 
     # load the image and get its rect
-    self.image = pygame.image.load('image/rocket.bmp')
+    self.image = pygame.i mage.load('image/rocket.bmp')
     self.rect = self.image.get_rect()
 
     # get the screen rect

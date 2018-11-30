@@ -1,5 +1,7 @@
 # -*- coding: gbk -*-
 
+import wordcloud
+import wikipedia
 import string
 import datetime
 import threading
